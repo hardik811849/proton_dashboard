@@ -36,7 +36,7 @@ export default function HeaderContent() {
       </IconButton>
 
       <Button ml={4} bg={'#ff5800'} color={'#fff'} p={2} rounded={'lg'}>
-        Signup/Signin
+        Signup/Login
       </Button>
 
       {/* <Notification /> */}

@@ -20,6 +20,30 @@ const dashboard = {
       url: '/dashboard/default',
       icon: icons.DashboardOutlined,
       breadcrumbs: false
+    },
+    {
+      id: 'portfolio',
+      title: 'Portfolio',
+      type: 'item',
+      url: '/portfolio/default',
+      icon: icons.DashboardOutlined,
+      breadcrumbs: false
+    },
+    {
+      id: 'wallet',
+      title: 'Wallet',
+      type: 'item',
+      url: '/wallet/default',
+      icon: icons.DashboardOutlined,
+      breadcrumbs: false
+    },
+    {
+      id: 'partners',
+      title: 'Partners',
+      type: 'item',
+      url: '/partners/default',
+      icon: icons.DashboardOutlined,
+      breadcrumbs: false
     }
   ]
 };

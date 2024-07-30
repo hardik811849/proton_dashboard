@@ -78,8 +78,7 @@ export default function SwapAndBuyToken() {
                     />
                   </Box>
                   <Box display={'flex'} alignItems={'center'} gap={'0.5rem'}>
-                    <Image src={usa} />
-                    USDT
+                    <Image src={usa} w={'3rem'} />
                   </Box>
                 </Flex>
 
@@ -114,8 +113,7 @@ export default function SwapAndBuyToken() {
                     />
                   </Box>
                   <Box display={'flex'} alignItems={'center'} gap={'0.5rem'}>
-                    <Image src={fav} width="2rem" />
-                    RealProton
+                    <Image src={fav} width="4rem" />
                   </Box>
                 </Flex>
 

@@ -91,6 +91,14 @@ export default function DashboardDefault() {
     generateDates();
   }, [selectedOption]);
 
+  useEffect(() => {
+    const countdownInterval = setInterval(() => {
+      setTimeLeft(endTime - Date.now());
+    }, 1000);
+
+    return () => clearInterval(countdownInterval);
+  }, [endTime]);
+
   const formatTimeLeft = (time) => {
     const days = Math.floor(time / (1000 * 60 * 60 * 24));
     const hours = Math.floor((time % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
@@ -116,10 +124,10 @@ export default function DashboardDefault() {
         <Typography
           className="time-part"
           sx={{
-            fontSize: { md: '18px', '2xl': '23px' },
+            fontSize: { md: '18px', '2xl': '28px' },
             fontWeight: 'light',
             bgcolor: 'rgba(255, 255, 255, 0.05)',
-            p: 3,
+
             textAlign: 'center',
             borderRadius: '0.75rem',
             color: '#FF5800'
@@ -133,7 +141,7 @@ export default function DashboardDefault() {
             fontSize: { md: '18px', '2xl': '23px' },
             fontWeight: 'light',
             bgcolor: 'rgba(255, 255, 255, 0.05)',
-            p: 3,
+            p: 1,
             textAlign: 'center',
             borderRadius: '0.75rem',
             color: '#FF5800'
@@ -147,7 +155,7 @@ export default function DashboardDefault() {
             fontSize: { md: '18px', '2xl': '23px' },
             fontWeight: 'light',
             bgcolor: 'rgba(255, 255, 255, 0.05)',
-            p: 3,
+            p: 1,
             textAlign: 'center',
             borderRadius: '0.75rem',
             color: '#FF5800'
@@ -161,7 +169,6 @@ export default function DashboardDefault() {
             fontSize: { md: '18px', '2xl': '23px' },
             fontWeight: 'light',
             bgcolor: 'rgba(255, 255, 255, 0.05)',
-            p: 3,
             textAlign: 'center',
             borderRadius: '0.75rem',
             color: '#FF5800'
@@ -184,7 +191,7 @@ export default function DashboardDefault() {
       </Grid>
 
       <Grid item xs={12} sm={6} md={4} lg={3}>
-        <AnalyticEcommerce title="RealProton ROI" count="$ 0" percentage={27.4} isLoss color="warning" extra="$20,395" />
+        <AnalyticEcommerce title="RealProton ROI" count="8 %" percentage={27.4} isLoss color="warning" extra="$20,395" />
       </Grid>
       <Grid item xs={12} sm={6} md={4} lg={6}>
         <MainCard>
@@ -201,8 +208,10 @@ export default function DashboardDefault() {
               <Divider sx={{ bgcolor: '#d4d4d4', opacity: 0.35 }} />
               <Typography textAlign="center">Day 1</Typography>
             </Box>
-            <Box>
-              <Typography variant="h4">Live in :</Typography>
+            <Box display={'flex'} alignItems={'center'}>
+              <Typography variant="h4" display={'inline'}>
+                Time Left :
+              </Typography>
               <Box className="timer">{formatTimeLeft(timeLeft)}</Box>
             </Box>
           </Box>
