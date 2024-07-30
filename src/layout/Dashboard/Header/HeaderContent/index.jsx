@@ -9,9 +9,11 @@ import Search from './Search';
 import Profile from './Profile';
 import Notification from './Notification';
 import MobileSection from './MobileSection';
+import metamask from '../../../../assets/metamask.png';
 
 // project import
 import { GithubOutlined } from '@ant-design/icons';
+import { Button, Image } from '@chakra-ui/react';
 
 // ==============================|| HEADER - CONTENT ||============================== //
 
@@ -24,19 +26,22 @@ export default function HeaderContent() {
       {downLG && <Box sx={{ width: '100%', ml: 1 }} />}
       <IconButton
         component={Link}
-        href="https://github.com/codedthemes/mantis-free-react-admin-template"
-        target="_blank"
+        onClick={() => metaMask()}
         disableRipple
         color="secondary"
         title="Download Free Version"
         sx={{ color: 'text.primary', bgcolor: 'grey.100' }}
       >
-        <GithubOutlined />
+        <Image src={metamask} />
       </IconButton>
 
-      <Notification />
-      {!downLG && <Profile />}
-      {downLG && <MobileSection />}
+      <Button ml={4} bg={'#ff5800'} color={'#fff'} p={2} rounded={'lg'}>
+        Signup/Signin
+      </Button>
+
+      {/* <Notification /> */}
+      {/* {!downLG && <Profile />} */}
+      {/* {downLG && <MobileSection />} */}
     </>
   );
 }

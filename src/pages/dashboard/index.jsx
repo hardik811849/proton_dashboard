@@ -29,6 +29,9 @@ import avatar1 from 'assets/images/users/avatar-1.png';
 import avatar2 from 'assets/images/users/avatar-2.png';
 import avatar3 from 'assets/images/users/avatar-3.png';
 import avatar4 from 'assets/images/users/avatar-4.png';
+import SwapAndBuyToken from './SwapAndBuyToken';
+import { useEffect, useState } from 'react';
+import { Divider } from '@mui/material';
 
 // avatar style
 const avatarSX = {
@@ -50,6 +53,126 @@ const actionSX = {
 // ==============================|| DASHBOARD - DEFAULT ||============================== //
 
 export default function DashboardDefault() {
+  const [endTime, setEndTime] = useState(Date.now() + 7 * 24 * 60 * 60 * 1000);
+  const [timeLeft, setTimeLeft] = useState(endTime - Date.now());
+  const [selectedOption, setSelectedOption] = useState('Daily');
+  const [dates, setDates] = useState([]);
+
+  useEffect(() => {
+    const generateDates = () => {
+      const today = new Date();
+      const datesArray = [];
+      if (selectedOption === 'Daily') {
+        for (let i = 0; i < 7; i++) {
+          const date = new Date();
+          date.setDate(today.getDate() + i);
+          datesArray.push({
+            day: date.getDate(),
+            month: date.toLocaleString('default', { month: 'long' }),
+            year: date.getFullYear(),
+            isToday: i === 0
+          });
+        }
+      } else if (selectedOption === 'Monthly') {
+        for (let i = 0; i < 7; i++) {
+          const date = new Date();
+          date.setMonth(today.getMonth() + i);
+          date.setDate(today.getDate());
+          datesArray.push({
+            day: date.getDate(),
+            month: date.toLocaleString('default', { month: 'long' }),
+            year: date.getFullYear(),
+            isToday: i === 0
+          });
+        }
+      }
+      setDates(datesArray);
+    };
+    generateDates();
+  }, [selectedOption]);
+
+  const formatTimeLeft = (time) => {
+    const days = Math.floor(time / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((time % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((time % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((time % (1000 * 60)) / 1000);
+
+    return (
+      <Box
+        display="grid"
+        gridTemplateColumns={{
+          base: 'repeat(2, 1fr)',
+          md: 'repeat(7, 1fr)'
+        }}
+        gap={{
+          base: 2,
+          md: 0
+        }}
+        alignItems="center"
+        justifyContent="center"
+        textAlign="center"
+        width="100%"
+      >
+        <Typography
+          className="time-part"
+          sx={{
+            fontSize: { md: '18px', '2xl': '23px' },
+            fontWeight: 'light',
+            bgcolor: 'rgba(255, 255, 255, 0.05)',
+            p: 3,
+            textAlign: 'center',
+            borderRadius: '0.75rem',
+            color: '#FF5800'
+          }}
+        >
+          {days}d
+        </Typography>
+        <Typography
+          className="time-part"
+          sx={{
+            fontSize: { md: '18px', '2xl': '23px' },
+            fontWeight: 'light',
+            bgcolor: 'rgba(255, 255, 255, 0.05)',
+            p: 3,
+            textAlign: 'center',
+            borderRadius: '0.75rem',
+            color: '#FF5800'
+          }}
+        >
+          {hours}h
+        </Typography>
+        <Typography
+          className="time-part"
+          sx={{
+            fontSize: { md: '18px', '2xl': '23px' },
+            fontWeight: 'light',
+            bgcolor: 'rgba(255, 255, 255, 0.05)',
+            p: 3,
+            textAlign: 'center',
+            borderRadius: '0.75rem',
+            color: '#FF5800'
+          }}
+        >
+          {minutes}m
+        </Typography>
+        <Typography
+          className="time-part"
+          sx={{
+            fontSize: { md: '18px', '2xl': '23px' },
+            fontWeight: 'light',
+            bgcolor: 'rgba(255, 255, 255, 0.05)',
+            p: 3,
+            textAlign: 'center',
+            borderRadius: '0.75rem',
+            color: '#FF5800'
+          }}
+        >
+          {seconds}s
+        </Typography>
+      </Box>
+    );
+  };
+
   return (
     <Grid container rowSpacing={4.5} columnSpacing={2.75}>
       {/* row 1 */}
@@ -57,24 +180,43 @@ export default function DashboardDefault() {
         <Typography variant="h5">Dashboard</Typography>
       </Grid>
       <Grid item xs={12} sm={6} md={4} lg={3}>
-        <AnalyticEcommerce title="Total Page Views" count="4,42,236" percentage={59.3} extra="35,000" />
+        <AnalyticEcommerce title="RealProton Price" count="$ 1" percentage={59.3} extra="35,000" />
       </Grid>
+
       <Grid item xs={12} sm={6} md={4} lg={3}>
-        <AnalyticEcommerce title="Total Users" count="78,250" percentage={70.5} extra="8,900" />
+        <AnalyticEcommerce title="RealProton ROI" count="$ 0" percentage={27.4} isLoss color="warning" extra="$20,395" />
       </Grid>
-      <Grid item xs={12} sm={6} md={4} lg={3}>
-        <AnalyticEcommerce title="Total Order" count="18,800" percentage={27.4} isLoss color="warning" extra="1,943" />
-      </Grid>
-      <Grid item xs={12} sm={6} md={4} lg={3}>
-        <AnalyticEcommerce title="Total Sales" count="$35,078" percentage={27.4} isLoss color="warning" extra="$20,395" />
+      <Grid item xs={12} sm={6} md={4} lg={6}>
+        <MainCard>
+          <Box
+            display="flex"
+            flexDirection={{ base: 'column', md: 'row' }}
+            gap={4}
+            alignItems="center"
+            borderRadius="10px"
+            bgcolor="rgba(255, 255, 255)"
+          >
+            <Box width={{ base: '80%', md: '20%', xl: '20%' }} bgcolor="rgba(255, 255, 255, 0.05)" alignItems="center" borderRadius="4px">
+              <Typography textAlign="center">Round 1</Typography>
+              <Divider sx={{ bgcolor: '#d4d4d4', opacity: 0.35 }} />
+              <Typography textAlign="center">Day 1</Typography>
+            </Box>
+            <Box>
+              <Typography variant="h4">Live in :</Typography>
+              <Box className="timer">{formatTimeLeft(timeLeft)}</Box>
+            </Box>
+          </Box>
+        </MainCard>
       </Grid>
 
       <Grid item md={8} sx={{ display: { sm: 'none', md: 'block', lg: 'none' } }} />
 
       {/* row 2 */}
-      <Grid item xs={12} md={7} lg={8}>
-        <UniqueVisitorCard />
+      <Grid item xs={12} md={12} lg={12}>
+        {/* <UniqueVisitorCard /> */}
+        <SwapAndBuyToken />
       </Grid>
+      {/* 
       <Grid item xs={12} md={5} lg={4}>
         <Grid container alignItems="center" justifyContent="space-between">
           <Grid item>
@@ -93,10 +235,10 @@ export default function DashboardDefault() {
           </Box>
           <MonthlyBarChart />
         </MainCard>
-      </Grid>
+      </Grid> */}
 
       {/* row 3 */}
-      <Grid item xs={12} md={7} lg={8}>
+      {/* <Grid item xs={12} md={7} lg={8}>
         <Grid container alignItems="center" justifyContent="space-between">
           <Grid item>
             <Typography variant="h5">Recent Orders</Typography>
@@ -131,10 +273,10 @@ export default function DashboardDefault() {
           </List>
           <ReportAreaChart />
         </MainCard>
-      </Grid>
+      </Grid> */}
 
       {/* row 4 */}
-      <Grid item xs={12} md={7} lg={8}>
+      {/* <Grid item xs={12} md={7} lg={8}>
         <SaleReportCard />
       </Grid>
       <Grid item xs={12} md={5} lg={4}>
@@ -240,7 +382,7 @@ export default function DashboardDefault() {
             </Button>
           </Stack>
         </MainCard>
-      </Grid>
+      </Grid> */}
     </Grid>
   );
 }
