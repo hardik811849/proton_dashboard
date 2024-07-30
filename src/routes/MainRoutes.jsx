@@ -1,4 +1,5 @@
 import { lazy } from 'react';
+import { Navigate } from 'react-router-dom';
 
 // project import
 import Loadable from 'components/Loadable';
@@ -11,6 +12,9 @@ const DashboardDefault = Loadable(lazy(() => import('pages/dashboard/index')));
 
 // render - sample page
 const SamplePage = Loadable(lazy(() => import('pages/extra-pages/sample-page')));
+
+// Error page
+const ErrorPage = Loadable(lazy(() => import('pages/ErrorPage')));
 
 // ==============================|| MAIN ROUTING ||============================== //
 
@@ -46,6 +50,11 @@ const MainRoutes = {
     {
       path: 'typography',
       element: <Typography />
+    },
+    // Catch-all route to handle unknown paths
+    {
+      path: '*',
+      element: <Navigate to="/" replace />
     }
   ]
 };
